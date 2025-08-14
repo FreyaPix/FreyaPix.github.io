@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Dienstplan</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+        th { background: #f4f4f4; }
+    </style>
+</head>
+<body>
+    <h1>Dienstplan</h1>
+    <table id="planTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Datum</th>
+                <th>Schicht</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <script>
+        const API_URL = "DEINE_RENDER_URL/api/schichten";
+
+        fetch(API_URL)
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.querySelector("#planTable tbody");
+                data.forEach(row => {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td>${row.name}</td>
+                        <td>${row.datum}</td>
+                        <td>${row.schicht}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            })
+            .catch(err => console.error("Fehler:", err));
+    </script>
+</body>
+</html>
