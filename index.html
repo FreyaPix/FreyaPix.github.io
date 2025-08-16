@@ -1,45 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <title>Dienstplan</title>
-    <style>
-        body { font-family: Arial; padding: 20px; }
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid #ddd; padding: 8px; }
-        th { background: #f4f4f4; }
-    </style>
+  <meta charset="UTF-8">
+  <title>Dienstplan App</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Dienstplan</h1>
-    <table id="planTable">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Datum</th>
-                <th>Schicht</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-    <script>
-        const API_URL = "DEINE_RENDER_URL/api/schichten";
+  <h1>📅 Dienstplan</h1>
 
-        fetch(API_URL)
-            .then(res => res.json())
-            .then(data => {
-                const tbody = document.querySelector("#planTable tbody");
-                data.forEach(row => {
-                    const tr = document.createElement("tr");
-                    tr.innerHTML = `
-                        <td>${row.name}</td>
-                        <td>${row.datum}</td>
-                        <td>${row.schicht}</td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-            })
-            .catch(err => console.error("Fehler:", err));
-    </script>
+  <section id="form-section">
+    <h2>Neue Schicht anlegen</h2>
+    <form id="shift-form">
+      <label for="name">Mitarbeiter:</label>
+      <input type="text" id="name" required>
+
+      <label for="date">Datum:</label>
+      <input type="date" id="date" required>
+
+      <label for="shift">Schicht:</label>
+      <select id="shift" required>
+        <option value="Frühschicht">Frühschicht</option>
+        <option value="Spätschicht">Spätschicht</option>
+        <option value="Nachtschicht">Nachtschicht</option>
+      </select>
+
+      <button type="submit">➕ Hinzufügen</button>
+    </form>
+  </section>
+
+  <section id="plan-section">
+    <h2>Alle Schichten</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Mitarbeiter</th>
+          <th>Datum</th>
+          <th>Schicht</th>
+          <th>Aktionen</th>
+        </tr>
+      </thead>
+      <tbody id="shift-table-body"></tbody>
+    </table>
+  </section>
+
+  <script src="script.js"></script>
 </body>
 </html>
